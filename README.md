@@ -22,3 +22,19 @@ Options:
 2) Install python requirements (or make venv)
 
     `pip3 install -r requirements.txt`
+
+## Output:
+
+This script produces:
+
+- `Gzip` compressed FastQs
+- Modification informations. The files are gzipped and pickled python libraries. To load the data into python for further analysis use the following code:
+
+ ```
+ import pickle
+ import gzip
+ 
+ dat = pickle.load(gzip.open("myread.mod.gz", "rb"))
+ ```
+ 
+ This data is pretty useless on its own, a consensus module based on a minimap alignment might be really useful...
