@@ -74,21 +74,22 @@ def extract_data (file):
 
     for read in list(f.keys()):
         #print("Read: ", read)
-    
-        if not (arguments["--noFastq"]): 
-            # Write Fastq
-            fastq = f[read].get("Analyses/" + analysis + "/BaseCalled_template/Fastq")
-            if os.path.exists(file_fq):
-                append_write = 'at'
-            else:
-                append_write = 'wt'
-            outfq = gzip.open(file_fq, append_write)
-            outfq.write(fastq[()].decode())
-            outfq.close
+        try:
+            if not (arguments["--noFastq"]): 
+                # Write Fastq
+                fastq = f[read].get("Analyses/" + analysis + "/BaseCalled_template/Fastq")
+                if os.path.exists(file_fq):
+                    append_write = 'at'
+                else:
+                    append_write = 'wt'
+                outfq = gzip.open(file_fq, append_write)
+                outfq.write(fastq[()].decode())
+                outfq.close
 
-        # Extract mod values and add to library
-        mods["mod_values"][read] = f[read].get("Analyses/"+ analysis + "/BaseCalled_template/ModBaseProbs")[()]
-
+            # Extract mod values and add to library
+            mods["mod_values"][read] = f[read].get("Analyses/"+ analysis + "/BaseCalled_template/ModBaseProbs")[()]
+        except:
+            print("Unable to extract data from read", read)
     #print("saving modfile to ", file_mod)
     pickle.dump(mods, gzip.open(file_mod, "wb"))
 
