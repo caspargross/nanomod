@@ -99,7 +99,7 @@ print("Found", len(files), "Fast5 files")
 print("Using", arguments["--threads"], "threads")
 
 Parallel(n_jobs=int(arguments["--threads"]))(
-    delayed(extract_data(file)) for file in tqdm(files)
+    delayed(extract_data)(file) for file in tqdm(files)
 )
 #for file in progressbar.progressbar(files):
 #    extract_data(file)   
